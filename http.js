@@ -7,6 +7,7 @@ const server = http.createServer((req, res) => {
 	// Setting header
 	res.writeHead(200, { 'Content-Type': 'application/json' });
 	res.writeHead(200, { 'X-Custom': 'goonj' });
+	res.writeHead(200, {'Access-Control-Allow-Origin': '*'});
 
 	console.log('Number: ', req.headers['x-msisdn']);
 
