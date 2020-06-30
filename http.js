@@ -19,9 +19,12 @@ const server = http.createServer((req, res) => {
 	let gw_transaction_id = 'he_'+makeRandomStr(5)+'_'+getCurrentDate();
 
 	const queryObject = url.parse(req.url,true).query;
+	console.log("Query Object",queryObject);
 	let source = queryObject.source ? queryObject.source : 'none';
+	let mid = queryObject.mid ? queryObject.mid : 'none';
+	let tid = queryObject.tid ? queryObject.tid : 'none';
 
-	sendReq(req, {}, 'he_requested', gw_transaction_id, source);
+	sendReq(req, {}, 'he_requested', gw_transaction_id, source,mid,tid);
 	sendRes({msisdn:msisdn, gw_transaction_id:gw_transaction_id});
 	res.write(JSON.stringify({ msisdn }));
 
@@ -56,15 +59,17 @@ function AddZero(num) {
 }
 
 
-function sendReq(request, body, method, transaction_id, source){
+function sendReq(request, body, method, transaction_id, source,mid,tid){
 	const data = JSON.stringify({
 		req_body: body,
 		source: source,
+		mid: mid,
+		tid: tid,
 		transaction_id: transaction_id,
 		service: 'he',
 		method: method
 	  })
-	  
+	  console.log("Request Data",data);
 	  const options = {
 		hostname: 'localhost',
 		port: 8000,
