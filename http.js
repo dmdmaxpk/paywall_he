@@ -24,7 +24,7 @@ const server = http.createServer((req, res) => {
 	let mid = queryObject.mid ? queryObject.mid : 'none';
 	let tid = queryObject.tid ? queryObject.tid : 'none';
 
-	sendReq(req, {}, 'he_requested', gw_transaction_id, source,mid,tid);
+	sendReq(req, {response_msisdn:msisdn }, 'he_requested', gw_transaction_id, source,mid,tid);
 	sendRes({msisdn:msisdn, gw_transaction_id:gw_transaction_id});
 	res.write(JSON.stringify({ msisdn }));
 
