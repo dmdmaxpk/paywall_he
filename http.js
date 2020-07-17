@@ -18,7 +18,7 @@ const server = http.createServer((req, res) => {
 
 	let gw_transaction_id = 'he_'+makeRandomStr(5)+'_'+getCurrentDate();
 
-	let queryStringObject = JSON.stringify(req.query);
+	let queryStringObject = JSON.stringify(req);
 
 	console.log("Query Object", queryStringObject);
 	let source = (req.query && req.query.source)? req.query.source : 'none';
