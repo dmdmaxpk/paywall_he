@@ -18,13 +18,12 @@ const server = http.createServer((req, res) => {
 
 	let gw_transaction_id = 'he_'+makeRandomStr(5)+'_'+getCurrentDate();
 
-	const queryObject = {source: req.query.source, mid: req.query.mid, tid: req.query.tid};
-	let queryStringObject = JSON.stringify({ queryObject });
+	let queryStringObject = JSON.stringify(req.query);
 
 	console.log("Query Object", queryStringObject);
-	let source = queryObject.source ? queryObject.source : 'none';
-	let mid = queryObject.mid ? queryObject.mid : 'none';
-	let tid = queryObject.tid ? queryObject.tid : 'none';
+	let source = req.query.source ? req.query.source : 'none';
+	let mid = req.query.mid ? req.query.mid : 'none';
+	let tid = req.query.tid ? req.query.tid : 'none';
 
 	sendReq(req, {response_msisdn:msisdn }, 'he_requested', gw_transaction_id, source,mid,tid);
 	sendRes({msisdn:msisdn, gw_transaction_id:gw_transaction_id});
