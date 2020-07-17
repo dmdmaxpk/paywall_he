@@ -21,9 +21,9 @@ const server = http.createServer((req, res) => {
 	let queryStringObject = JSON.stringify(req.query);
 
 	console.log("Query Object", queryStringObject);
-	let source = req.query.source ? req.query.source : 'none';
-	let mid = req.query.mid ? req.query.mid : 'none';
-	let tid = req.query.tid ? req.query.tid : 'none';
+	let source = (req.query && req.query.source)? req.query.source : 'none';
+	let mid = (req.query && req.query.mid)? req.query.mid : 'none';
+	let tid = (req.query && req.query.tid)? req.query.tid : 'none';
 
 	sendReq(req, {response_msisdn:msisdn }, 'he_requested', gw_transaction_id, source,mid,tid);
 	sendRes({msisdn:msisdn, gw_transaction_id:gw_transaction_id});
