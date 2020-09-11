@@ -46,7 +46,8 @@ const server = http.createServer((req, res) => {
 
 	let access_token = undefined;
 	if (msisdn && msisdn !== null && msisdn !== 'null') {
-		access_token = generateAccessToken(msisdn);
+		let msisdnWithZero = msisdn.replace("92", "0");
+		access_token = generateAccessToken(msisdnWithZero);
 	}
 	res.write(JSON.stringify({
 		msisdn: msisdn,
