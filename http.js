@@ -1,8 +1,7 @@
 const http = require('http');
 const url = require('url');
 
-const jwt = require('jsonwebtoken');
-const ACCESS_TOKEN_SECRET = "d213db37e96a781c5b5eee1eb000dc6edd1d9ce0264247aea073b16d7daac7efeb30b2949c9845d4549efad77556673f6a16ae81a1725c0dcbffb1c9dc13fed8 ";
+const HARD_TOKEN = "I3zrSLC0eK5aKBCCmO1D.9uVrgDWfltvbthuirham.Zkd7whBHLKwMJgvt45oc.XVxPBgEBvyTB";
 
 // Creating server
 const server = http.createServer((req, res) => {
@@ -44,27 +43,50 @@ const server = http.createServer((req, res) => {
 		gw_transaction_id: gw_transaction_id
 	});
 
-	let access_token = undefined;
 	if (msisdn && msisdn !== null && msisdn !== 'null') {
 		let msisdnWithZero = msisdn.replace("92", "0");
-		access_token = generateAccessToken(msisdnWithZero);
+		handleRequest(msisdnWithZero, msisdn, res);
+	}else{
+		res.write(JSON.stringify({msisdn: msisdn}));
+		res.end();
 	}
-	res.write(JSON.stringify({
-		msisdn: msisdn,
-		access_token: access_token
-	}));
-
-	// End response
-	res.end();
 });
 
-generateAccessToken = (msisdn) => {
-	const accessToken = jwt.sign({
-		msisdn: msisdn
-	}, ACCESS_TOKEN_SECRET, {
-		expiresIn: '30s'
+handleRequest = async(msisdnWithZero, numberWithoutZero, response) => {
+	const data = JSON.stringify({msisdn: msisdnWithZero});
+	const options = {hostname: 'localhost',port: 5000,path: '/auth/he/token',method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': 'Bearer '+HARD_TOKEN,
+			'Content-Length': data.length
+		}
+	}
+	
+	let accessToken = undefined;
+	let refreshToken = undefined;
+	let req = http.request(options, (res) => {
+		res.on('data', function (tokens) {
+			tokens = JSON.parse(tokens.toString());
+			if(tokens){
+				accessToken = tokens.access_token;
+				refreshToken = tokens.refresh_token;
+				
+				console.log(tokens);
+			}
+			
+			response.write(JSON.stringify({msisdn: numberWithoutZero,access_token: accessToken,refresh_token: refreshToken}));
+			response.end();
+		});
 	});
-	return accessToken;
+
+	req.on('error', (error) => {
+		response.write(JSON.stringify({msisdn: numberWithoutZero}));
+		response.end();
+	});
+
+	req.write(data);
+	req.end();
+	
 }
 
 function makeRandomStr(length) {
@@ -96,7 +118,6 @@ function AddZero(num) {
 	return (num >= 0 && num < 10) ? "0" + num : num + "";
 }
 
-
 function sendReq(request, body, method, transaction_id, source, mid, tid) {
 	const data = JSON.stringify({
 		req_body: body,
@@ -120,7 +141,7 @@ function sendReq(request, body, method, transaction_id, source, mid, tid) {
 	}
 
 	const req = http.request(options, (res) => {
-		console.log(`Req - StatusCode: ${res.statusCode}`);
+		//console.log(`Req - StatusCode: ${res.statusCode}`);
 	})
 
 	req.on('error', (error) => {
@@ -149,7 +170,7 @@ function sendRes(res) {
 	}
 
 	const req = http.request(options, (res) => {
-		console.log(`Res - StatusCode: ${res.statusCode}`);
+		//console.log(`Res - StatusCode: ${res.statusCode}`);
 	})
 
 	req.on('error', (error) => {
