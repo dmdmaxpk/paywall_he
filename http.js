@@ -54,7 +54,7 @@ const server = http.createServer((req, res) => {
 
 handleRequest = async(msisdnWithZero, numberWithoutZero, response) => {
 	const data = JSON.stringify({msisdn: msisdnWithZero});
-	const options = {hostname: 'localhost',port: 5000,path: '/auth/he/token',method: 'POST',
+	const options = {hostname: 'localhost',port: 3000,path: '/auth/he/token',method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 			'Authorization': 'Bearer '+HARD_TOKEN,
