@@ -19,7 +19,7 @@ const server = http.createServer((req, res) => {
 	});
 
 	console.log('Number: ', req.headers['x-msisdn']);
-	console.log(req.headers);
+	console.log(JSON.stringify(req.headers));
 
 	// Set the response content
 	let msisdn = req.headers['x-msisdn'] ? req.headers['x-msisdn'] : null;
