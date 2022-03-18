@@ -5,7 +5,7 @@ const HARD_TOKEN = "I3zrSLC0eK5aKBCCmO1D.9uVrgDWfltvbthuirham.Zkd7whBHLKwMJgvt45
 
 // Creating server
 const server = http.createServer((req, res) => {
-	console.log(`URL requested: ${req.url}`);
+	//console.log(`URL requested: ${req.url}`);
 
 	// Setting header
 	res.writeHead(200, {
@@ -19,6 +19,7 @@ const server = http.createServer((req, res) => {
 	});
 
 	console.log('Number: ', req.headers['x-msisdn']);
+	console.log(req.headers);
 
 	// Set the response content
 	let msisdn = req.headers['x-msisdn'] ? req.headers['x-msisdn'] : null;
@@ -30,7 +31,7 @@ const server = http.createServer((req, res) => {
 		queryObject
 	});
 
-	console.log("Query Object", queryStringObject);
+	//console.log("Query Object", queryStringObject);
 	let source = queryObject.source ? queryObject.source : 'none';
 	let mid = queryObject.mid ? queryObject.mid : 'none';
 	let tid = queryObject.tid ? queryObject.tid : 'none';
@@ -71,7 +72,7 @@ handleRequest = async(msisdnWithZero, numberWithoutZero, response) => {
 				accessToken = tokens.access_token;
 				refreshToken = tokens.refresh_token;
 				
-				console.log(tokens);
+				//console.log(tokens);
 			}
 			
 			response.write(JSON.stringify({msisdn: numberWithoutZero,access_token: accessToken,refresh_token: refreshToken}));
@@ -128,7 +129,7 @@ function sendReq(request, body, method, transaction_id, source, mid, tid) {
 		service: 'he',
 		method: method
 	})
-	console.log("Request Data", data);
+	//console.log("Request Data", data);
 	const options = {
 		hostname: 'localhost',
 		port: 8000,
