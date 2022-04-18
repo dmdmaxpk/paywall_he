@@ -20,21 +20,13 @@ const server = http.createServer((req, res) => {
 	});
 
 	console.log('Encrypted MSISDN: ', req.headers['x-encryptid']);
-	//console.log('Unencrypted MSISDN: ', req.headers['x-encryptid']);
-	getUnencryptedMsisdn(req.headers['x-encryptid'])
+	let unencrypted = await axios.get(`http://hedecrypt.goonj.pk/hedecrypt/index.php?msisdn=${req.headers['x-encryptid']}`);
+	let msisdn = unencrypted.data.msisdn;
+	console.log('Unencrypted MSISDN: ', msisdn);
 	
 
-	// Set the response content
-	let msisdn = req.headers['x-msisdn'] ? req.headers['x-msisdn'] : null;
-
 	let gw_transaction_id = 'he_' + makeRandomStr(5) + '_' + getCurrentDate();
-
 	const queryObject = url.parse(req.url, true).query;
-	let queryStringObject = JSON.stringify({
-		queryObject
-	});
-
-	//console.log("Query Object", queryStringObject);
 	let source = queryObject.source ? queryObject.source : 'none';
 	let mid = queryObject.mid ? queryObject.mid : 'none';
 	let tid = queryObject.tid ? queryObject.tid : 'none';
@@ -123,7 +115,7 @@ function AddZero(num) {
 }
 
 function getUnencryptedMsisdn(msisdn) {
-	axios.get(`http://hedecrypt.goonj.pk/hedecrypt/index.php?msisdn=${msisdn}`)
+	
   .then(response => {
     console.log(response.data);
   })
