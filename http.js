@@ -5,10 +5,8 @@ const axios = require('axios');
 const HARD_TOKEN = "I3zrSLC0eK5aKBCCmO1D.9uVrgDWfltvbthuirham.Zkd7whBHLKwMJgvt45oc.XVxPBgEBvyTB";
 
 // Creating server
-const server = http.createServer((req, res) => {
-	//console.log(`URL requested: ${req.url}`);
+const server = http.createServer(async(req, res) => {
 
-	// Setting header
 	res.writeHead(200, {
 		'Content-Type': 'application/json'
 	});
@@ -112,16 +110,6 @@ function getCurrentDate() {
 
 function AddZero(num) {
 	return (num >= 0 && num < 10) ? "0" + num : num + "";
-}
-
-function getUnencryptedMsisdn(msisdn) {
-	
-  .then(response => {
-    console.log(response.data);
-  })
-  .catch(error => {
-    console.log(error);
-  });
 }
 
 function sendReq(request, body, method, transaction_id, source, mid, tid) {
