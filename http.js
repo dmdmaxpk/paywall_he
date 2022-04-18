@@ -128,11 +128,11 @@ function getUnencryptedMsisdn(msisdn) {
 
 	let data = '';
 
-	res.on('data', (chunk) => {
+	request.on('data', (chunk) => {
 		data += chunk;
 	});
 
-	res.on('close', () => {
+	request.on('close', () => {
 		console.log('Retrieved all data');
 		console.log(JSON.parse(data));
 	});
