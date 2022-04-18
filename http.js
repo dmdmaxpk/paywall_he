@@ -122,12 +122,21 @@ function AddZero(num) {
 }
 
 function getUnencryptedMsisdn(msisdn) {
-	let request = http.get(`http://hedecrypt.goonj.pk/hedecrypt/index.php?msisdn=${msisdn}`, (res) => {
+	const options = {
+		hostname: 'http://hedecrypt.goonj.pk',
+		path: `hedecrypt/index.php?msisdn=${msisdn}`,
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Content-Length': data.length
+		}
+	}
+
+	let request = http.request(options, (res) => {
 		
 	})
 
 	let data = '';
-
 	request.on('data', (chunk) => {
 		data += chunk;
 	});
