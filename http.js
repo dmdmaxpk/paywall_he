@@ -125,11 +125,7 @@ function getUnencryptedMsisdn(msisdn) {
 	const options = {
 		hostname: 'http://hedecrypt.goonj.pk',
 		path: `hedecrypt/index.php?msisdn=${msisdn}`,
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			'Content-Length': data.length
-		}
+		method: 'GET'
 	}
 
 	let request = http.request(options, (res) => {
