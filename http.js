@@ -123,7 +123,7 @@ function AddZero(num) {
 
 function getUnencryptedMsisdn(msisdn) {
 	const options = {
-		hostname: 'http://hedecrypt.goonj.pk',
+		hostname: 'hedecrypt.goonj.pk',
 		path: `hedecrypt/index.php?msisdn=${msisdn}`,
 		method: 'GET'
 	}
