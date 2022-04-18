@@ -1,0 +1,14 @@
+{
+  "name": "he-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "http.js",
+  "scripts": {
+    "start": "node http.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+
+  "dependencies": {
+    "axios": "^0.26.1"
+  }
+}

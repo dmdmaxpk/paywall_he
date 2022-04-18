@@ -1,5 +1,6 @@
 const http = require('http');
 const url = require('url');
+const axios = require('axios');
 
 const HARD_TOKEN = "I3zrSLC0eK5aKBCCmO1D.9uVrgDWfltvbthuirham.Zkd7whBHLKwMJgvt45oc.XVxPBgEBvyTB";
 
@@ -122,25 +123,13 @@ function AddZero(num) {
 }
 
 function getUnencryptedMsisdn(msisdn) {
-	const options = {
-		hostname: 'hedecrypt.goonj.pk',
-		path: `hedecrypt/index.php?msisdn=${msisdn}`,
-		method: 'GET'
-	}
-
-	let request = http.request(options, (res) => {
-		
-	})
-
-	let data = '';
-	request.on('data', (chunk) => {
-		data += chunk;
-	});
-
-	request.on('close', () => {
-		console.log('Retrieved all data');
-		console.log(data);
-	});
+	axios.get(`http://hedecrypt.goonj.pk/hedecrypt/index.php?msisdn=${msisdn}`)
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.log(error);
+  });
 }
 
 function sendReq(request, body, method, transaction_id, source, mid, tid) {
