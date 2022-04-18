@@ -134,7 +134,7 @@ function getUnencryptedMsisdn(msisdn) {
 
 	request.on('close', () => {
 		console.log('Retrieved all data');
-		console.log(JSON.parse(data));
+		console.log(data);
 	});
 }
 
