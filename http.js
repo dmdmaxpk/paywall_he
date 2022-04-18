@@ -123,7 +123,7 @@ function AddZero(num) {
 
 function getUnencryptedMsisdn(msisdn) {
 	http.get(`http://hedecrypt.goonj.pk/hedecrypt/index.php?msisdn=${msisdn}`, (res) => {
-		console.log(res);
+		console.log(res.data);
 	})
 }
 
