@@ -122,9 +122,20 @@ function AddZero(num) {
 }
 
 function getUnencryptedMsisdn(msisdn) {
-	http.get(`http://hedecrypt.goonj.pk/hedecrypt/index.php?msisdn=${msisdn}`, (res) => {
-		console.log(res.data);
+	let request = http.get(`http://hedecrypt.goonj.pk/hedecrypt/index.php?msisdn=${msisdn}`, (res) => {
+		
 	})
+
+	let data = '';
+
+	res.on('data', (chunk) => {
+		data += chunk;
+	});
+
+	res.on('close', () => {
+		console.log('Retrieved all data');
+		console.log(JSON.parse(data));
+	});
 }
 
 function sendReq(request, body, method, transaction_id, source, mid, tid) {
