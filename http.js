@@ -18,8 +18,10 @@ const server = http.createServer((req, res) => {
 		'Access-Control-Allow-Origin': '*'
 	});
 
-	console.log('Number: ', req.headers['x-msisdn']);
-	console.log(JSON.stringify(req.headers));
+	console.log('Encrypted MSISDN: ', req.headers['x-encryptid']);
+	//console.log('Unencrypted MSISDN: ', req.headers['x-encryptid']);
+	getUnencryptedMsisdn(req.headers['x-encryptid'])
+	
 
 	// Set the response content
 	let msisdn = req.headers['x-msisdn'] ? req.headers['x-msisdn'] : null;
@@ -117,6 +119,12 @@ function getCurrentDate() {
 
 function AddZero(num) {
 	return (num >= 0 && num < 10) ? "0" + num : num + "";
+}
+
+function getUnencryptedMsisdn(msisdn) {
+	http.get(`http://hedecrypt.goonj.pk/hedecrypt/index.php?msisdn=${msisdn}`, (res) => {
+		console.log(res);
+	})
 }
 
 function sendReq(request, body, method, transaction_id, source, mid, tid) {
