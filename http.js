@@ -17,8 +17,9 @@ const server = http.createServer(async(req, res) => {
 		'Access-Control-Allow-Origin': '*'
 	});
 
-	console.log('Encrypted MSISDN: ', req.headers['x-encryptid']);
+	console.log('Encrypted MSISDN:', req.headers['x-encryptid']);
 	let uri = `http://hedecrypt.goonj.pk/hedecrypt/index.php?msisdn=${url.parse(req.headers['x-encryptid'])}`;
+	console.log(uri);
 	let unencrypted = await axios.get(uri);
 	console.log(unencrypted.data);
 	
