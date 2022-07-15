@@ -19,7 +19,7 @@ const server = http.createServer(async(req, res) => {
 
 	console.log('Encrypted MSISDN: ', req.headers['x-encryptid']);
 	let url = `http://hedecrypt.goonj.pk/hedecrypt/index.php?msisdn=${encodeURI(req.headers['x-encryptid'])}`;
-	let unencrypted = await axios.get(ur);
+	let unencrypted = await axios.get(url);
 	console.log(unencrypted.data);
 	
 	let msisdn = unencrypted.data.msisdn;
